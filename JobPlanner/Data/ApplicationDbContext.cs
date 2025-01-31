@@ -52,6 +52,7 @@ namespace JobPlanner.Data
                 }
             );
         }
+        public DbSet<JobPlanner.Models.Location> Location { get; set; } = default!;
     }
 
 }

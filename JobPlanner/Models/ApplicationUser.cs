@@ -7,5 +7,7 @@ namespace JobPlanner.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public byte[]? Image { get; set; }
+
+        public List<Location> Locations { get; } = [];
     }
 }
