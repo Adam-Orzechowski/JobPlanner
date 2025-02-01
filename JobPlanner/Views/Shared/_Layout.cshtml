@@ -88,8 +88,16 @@
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <span class="account-user-avatar">
-                                    @* <img src="~/assets/images/users/avatar-1.jpg" alt="user-image" width="32" class="rounded-circle"> *@
-                                    <i class="ri-user-line font-22"></i>
+                                    @if (User.HasClaim(c => c.Type == "Image"))
+                                    {
+                                        var imageBytes = Convert.FromBase64String(User.FindFirst("Image").Value);
+                                        var base64Image = Convert.ToBase64String(imageBytes);
+                                        <img src="data:image/png;base64,@base64Image" alt="user-image" width="32" class="rounded-circle">
+                                    }
+                                    else
+                                    {
+                                        <i class="ri-user-line font-22"></i>
+                                    }
                                 </span>
                                 <span class="d-lg-flex flex-column gap-1 d-none">
                                     <h5 class="my-0">@User.Identity?.Name</h5>
@@ -115,10 +123,10 @@
                             </a> *@
 
                                 <!-- item-->
-                                <a asp-controller="Home" asp-action="FAQ" class="dropdown-item">
+                                @*<a asp-controller="Home" asp-action="FAQ" class="dropdown-item">
                                     <i class="mdi mdi-lifebuoy me-1"></i>
                                     <span>Support</span>
-                                </a>
+                                </a>*@
 
                                 <!-- item-->
                                 <a href="javascript:logout.submit();" class="dropdown-item">

@@ -41,6 +41,19 @@ namespace JobPlanner.Data
                     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "admin"),
                     Image = File.ReadAllBytes("wwwroot\\assets\\images\\users\\avatar-1.jpg"),
                     EmailConfirmed = true
+                },
+                new ApplicationUser
+                {
+                    Id = "dfe1a10b-5d53-4080-a2a3-156782522593",
+                    UserName = "user@localhost",
+                    NormalizedUserName = "USER@LOCALHOST",
+                    Email = "user@localhost",
+                    NormalizedEmail = "USER@LOCALHOST",
+                    PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "user"),
+                    Image = File.ReadAllBytes("wwwroot\\assets\\images\\users\\avatar-2.jpg"),
+                    FirstName = "User",
+                    LastName = "Default",
+                    EmailConfirmed = true
                 }
             );
             builder.Entity<IdentityUserRole<string>>().HasData(
@@ -49,6 +62,11 @@ namespace JobPlanner.Data
                 {
                     RoleId = "5e174d1e-2b9f-48fe-9561-1149894920f5",
                     UserId = "22d1a66c-ccd8-4c1e-8763-a896c287ea2c"
+                },
+                new IdentityUserRole<string>
+                {
+                    RoleId = "22d1a66c-ccd8-4c1e-8763-a896c287ea2c",
+                    UserId = "dfe1a10b-5d53-4080-a2a3-156782522593"
                 }
             );
         }
