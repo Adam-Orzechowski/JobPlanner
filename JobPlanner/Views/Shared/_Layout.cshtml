@@ -32,21 +32,22 @@
                     <!-- Topbar Brand Logo -->
                     <div class="logo-topbar">
                         <!-- Logo light -->
-                        <a href="index.html" class="logo-light">
-                            <span class="logo-lg">
-                                <img src="~/assets/images/logo.png" alt="logo">
+                        <a href="index.html" class="logo-light text-light">
+                            <span class="logo-lg text-light">
+                                <i class="ri-calendar-2-line"></i> Job Planner
                             </span>
                             <span class="logo-sm">
-                                <img src="~/assets/images/logoJP.png" alt="small logo">
+                                <i class="ri-calendar-2-line"></i>
+                                
                             </span>
                         </a>
                         <!-- Logo Dark -->
-                        <a href="index.html" class="logo-dark">
-                            <span class="logo-lg">
-                                <img src="~/assets/images/logo-dark.png" alt="dark logo">
+                        <a href="index.html" class="logo-dark text-light">
+                            <span class="logo-lg text-light">
+                                <i class="ri-calendar-2-line"></i> Job Planner
                             </span>
                             <span class="logo-sm">
-                                <img src="~/assets/images/logoJP.png" alt="small logo">
+                                <i class="ri-calendar-2-line"></i>
                             </span>
                         </a>
                     </div>
@@ -88,7 +89,7 @@
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <span class="account-user-avatar">
-                                    @if (User.HasClaim(c => c.Type == "Image"))
+                                    @if (User.HasClaim(c => c.Type == "Image") && !string.IsNullOrEmpty(User.FindFirst("Image").Value))
                                     {
                                         var imageBytes = Convert.FromBase64String(User.FindFirst("Image").Value);
                                         var base64Image = Convert.ToBase64String(imageBytes);
@@ -154,22 +155,22 @@
         <div class="leftside-menu">
 
             <!-- Brand Logo Light -->
-            <a href="index.html" class="logo logo-light">
+            <a href="index.html" class="logo logo-light text-light">
                 <span class="logo-lg">
-                    <img src="~/assets/images/logoJP.png" alt="logo">
+                    <i class="ri-calendar-2-line"></i> Job Planner
                 </span>
                 <span class="logo-sm">
-                    <img src="~/assets/images/logo-sm.png" alt="small logo">
+                    <i class="ri-calendar-2-line"></i>
                 </span>
             </a>
 
             <!-- Brand Logo Dark -->
-            <a href="index.html" class="logo logo-dark">
-                <span class="logo-lg">
-                    <img src="~/assets/images/logo-dark.png" alt="dark logo">
+            <a href="index.html" class="logo logo-dark text-light">
+                <span class="logo-lg text-light">
+                    <i class="ri-calendar-2-line"></i> Job Planner
                 </span>
-                <span class="logo-sm">
-                    <img src="~/assets/images/logo-dark-sm.png" alt="small logo">
+                <span class="logo-sm text-light">
+                    <i class="ri-calendar-2-line"></i>
                 </span>
             </a>
 

@@ -40,6 +40,35 @@
     </div>
 </div>
 
+<button class="btn">Add</button>
+
+<h4>Employees</h4>
+@foreach (Employee emp in ViewBag.emp)
+{
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => emp.FirstName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => emp.FirstName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => emp.LastName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => emp.LastName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => emp.PhoneNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => emp.PhoneNumber)
+            </dd>
+        </dl>
+    </div>
+}
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

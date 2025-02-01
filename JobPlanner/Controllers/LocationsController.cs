@@ -60,7 +60,7 @@ namespace JobPlanner.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.Emp = await _context.Employee.Where(e => e.LocationId == id).ToListAsync();
             return View(location);
         }
 
@@ -112,6 +112,7 @@ namespace JobPlanner.Controllers
             {
                 return NotFound();
             }
+
             return View(location);
         }
 

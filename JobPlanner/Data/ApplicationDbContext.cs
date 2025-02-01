@@ -72,6 +72,7 @@ namespace JobPlanner.Data
         }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; } = default!;
         public DbSet<JobPlanner.Models.Location> Locations { get; set; } = default!;
+        public DbSet<JobPlanner.Models.Employee> Employee { get; set; } = default!;
     }
 
 }
