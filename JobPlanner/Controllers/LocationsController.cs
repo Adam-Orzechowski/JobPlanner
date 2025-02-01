@@ -37,15 +37,18 @@ namespace JobPlanner.Controllers
             {
                 return NotFound();
             }
-            var userLocations = await _context.Locations.Include(l => l.Users).Where(l => l.Users.Contains(user)).ToListAsync();
-            
+            var userLocations = await _context.Locations
+                .Include(l => l.UserLocations)
+                .Where(l => l.UserLocations.Any(ul => ul.UserId == user.Id))
+                .ToListAsync();
+
             return View("Index", userLocations);
-            
+
         }
 
 
 
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.Admin + "," + Roles.User)]
         // GET: Locations/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -53,15 +56,29 @@ namespace JobPlanner.Controllers
             {
                 return NotFound();
             }
-
+            if (User.IsInRole(Roles.User))
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                var userLocation = await _context.UserLocations.FirstOrDefaultAsync(ul => ul.UserId == user.Id && ul.LocationId == id);
+                if (userLocation == null)
+                {
+                    return NotFound();
+                }
+            }
+            
             var location = await _context.Locations
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (location == null)
             {
                 return NotFound();
             }
-            ViewBag.Emp = await _context.Employee.Where(e => e.LocationId == id).ToListAsync();
+            ViewBag.Emp = await _context.Employees.Where(e => e.LocationId == id).ToListAsync();
             return View(location);
+            
         }
 
         [Authorize(Roles = Roles.Admin)]

@@ -16,6 +16,17 @@ namespace JobPlanner.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<UserLocation>()
+                .HasOne(ul => ul.User)
+                .WithMany(u => u.UserLocations)
+                .HasForeignKey(ul => ul.UserId);
+
+            builder.Entity<UserLocation>()
+                .HasOne(ul => ul.Location)
+                .WithMany(l => l.UserLocations)
+                .HasForeignKey(ul => ul.LocationId);
+
+
             builder.Entity<IdentityRole>().HasData(
                 new IdentityRole
                 {
@@ -39,6 +50,8 @@ namespace JobPlanner.Data
                     Email = "admin@localhost",
                     NormalizedEmail = "ADMIN@LOCALHOST",
                     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "admin"),
+                    FirstName = "Admin",
+                    LastName = "System",
                     Image = File.ReadAllBytes("wwwroot\\assets\\images\\users\\avatar-1.jpg"),
                     EmailConfirmed = true
                 },
@@ -69,10 +82,31 @@ namespace JobPlanner.Data
                     UserId = "dfe1a10b-5d53-4080-a2a3-156782522593"
                 }
             );
+            builder.Entity<Location>().HasData(
+
+                new Location
+                {
+                    Id = new Guid("55dee26f-f439-42c1-8128-d1889517b698"),
+                    Name = "Discovery",
+                    Address = "Somewhere in space",
+                    Description = string.Empty,
+                    Image = File.ReadAllBytes("wwwroot\\assets\\images\\locations\\OIP.jpg"),
+                }
+            );
+
+            builder.Entity<UserLocation>().HasData(
+                new UserLocation
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = "dfe1a10b-5d53-4080-a2a3-156782522593",
+                    LocationId = new Guid("55dee26f-f439-42c1-8128-d1889517b698")
+                }
+            );
         }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; } = default!;
-        public DbSet<JobPlanner.Models.Location> Locations { get; set; } = default!;
-        public DbSet<JobPlanner.Models.Employee> Employee { get; set; } = default!;
+        public DbSet<Location> Locations { get; set; } = default!;
+        public DbSet<Employee> Employees { get; set; } = default!;
+        public DbSet<UserLocation> UserLocations { get; set; } = default!;
     }
 
 }

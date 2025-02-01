@@ -27,6 +27,6 @@ namespace JobPlanner.Models
         [Display(Name = "Location Image")]
         public byte[]? Image { get; set; }
 
-        public List<ApplicationUser> Users { get; } = [];
+        public ICollection<UserLocation> UserLocations { get; set; } = new List<UserLocation>();
     }
 }

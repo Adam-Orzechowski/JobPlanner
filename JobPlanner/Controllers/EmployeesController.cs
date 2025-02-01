@@ -22,7 +22,7 @@ namespace JobPlanner.Controllers
         // GET: Employees
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employee.ToListAsync());
+            return View(await _context.Employees.ToListAsync());
         }
 
         // GET: Employees/Details/5
@@ -33,7 +33,7 @@ namespace JobPlanner.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employee
+            var employee = await _context.Employees
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
             {
@@ -74,7 +74,7 @@ namespace JobPlanner.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employee.FindAsync(id);
+            var employee = await _context.Employees.FindAsync(id);
             if (employee == null)
             {
                 return NotFound();
@@ -125,7 +125,7 @@ namespace JobPlanner.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employee
+            var employee = await _context.Employees
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
             {
@@ -140,10 +140,10 @@ namespace JobPlanner.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var employee = await _context.Employee.FindAsync(id);
+            var employee = await _context.Employees.FindAsync(id);
             if (employee != null)
             {
-                _context.Employee.Remove(employee);
+                _context.Employees.Remove(employee);
             }
 
             await _context.SaveChangesAsync();
@@ -152,7 +152,7 @@ namespace JobPlanner.Controllers
 
         private bool EmployeeExists(Guid id)
         {
-            return _context.Employee.Any(e => e.Id == id);
+            return _context.Employees.Any(e => e.Id == id);
         }
     }
 }
