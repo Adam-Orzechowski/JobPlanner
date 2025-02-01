@@ -37,7 +37,7 @@
                                 <img src="~/assets/images/logo.png" alt="logo">
                             </span>
                             <span class="logo-sm">
-                                <img src="~/assets/images/logo-sm.png" alt="small logo">
+                                <img src="~/assets/images/logoJP.png" alt="small logo">
                             </span>
                         </a>
                         <!-- Logo Dark -->
@@ -46,7 +46,7 @@
                                 <img src="~/assets/images/logo-dark.png" alt="dark logo">
                             </span>
                             <span class="logo-sm">
-                                <img src="~/assets/images/logo-dark-sm.png" alt="small logo">
+                                <img src="~/assets/images/logoJP.png" alt="small logo">
                             </span>
                         </a>
                     </div>
@@ -156,7 +156,7 @@
             <!-- Brand Logo Light -->
             <a href="index.html" class="logo logo-light">
                 <span class="logo-lg">
-                    <img src="~/assets/images/logo.png" alt="logo">
+                    <img src="~/assets/images/logoJP.png" alt="logo">
                 </span>
                 <span class="logo-sm">
                     <img src="~/assets/images/logo-sm.png" alt="small logo">
@@ -246,6 +246,15 @@
                                 <a asp-area="" asp-controller="Locations" asp-action="MyLocations" class="side-nav-link">
                                     <i class="ri-community-line"></i>
                                     <span>My Locations</span>
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInRole(Roles.Admin))
+                        {
+                            <li class="side-nav-item">
+                                <a asp-area="" asp-controller="UserManagement" asp-action="Index" class="side-nav-link">
+                                    <i class="ri-id-card-line"></i>
+                                    <span>User Management</span>
                                 </a>
                             </li>
                         }

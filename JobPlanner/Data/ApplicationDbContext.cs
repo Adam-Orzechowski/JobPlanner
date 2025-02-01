@@ -71,7 +71,7 @@ namespace JobPlanner.Data
             );
         }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; } = default!;
-        public DbSet<JobPlanner.Models.Location> Location { get; set; } = default!;
+        public DbSet<JobPlanner.Models.Location> Locations { get; set; } = default!;
     }
 
 }

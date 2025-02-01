@@ -1,0 +1,47 @@
+﻿@model JobPlanner.Controllers.UserManagementController.UserWithRolesViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="User.Id" />
+            <div class="form-group">
+                <label asp-for="User.UserName" class="control-label"></label>
+                <input asp-for="User.UserName" class="form-control" />
+                <span asp-validation-for="User.UserName" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="User.Email" class="control-label"></label>
+                <input asp-for="User.Email" class="form-control" />
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+            </div>
+            <br />
+            <h6>Roles in system</h6>
+
+
+            @for (int i = 0; i < Model.UserRoles.Count(); i++)
+            {
+                <div class="form-group">
+                    <input type="hidden" asp-for="UserRoles[i].UserRole" value="@Model.UserRoles[i].UserRole" />
+                    <input asp-for="UserRoles[i].IsSelected" type="checkbox" class="form-check-input" />
+                    <label asp-for="UserRoles[i].UserRole" class="control-label">@Model.UserRoles[i].UserRole</label>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

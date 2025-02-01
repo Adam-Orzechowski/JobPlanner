@@ -2,7 +2,41 @@
     ViewData["Title"] = "Home Page";
 }
 
+@{
+    var userRole = User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(c => c.Type == "role")?.Value : null;
+}
+
 <div class="text-center">
+    <img width="250" src="~/assets/images/calendar.jpg" />
     <h1 class="display-4">Welcome</h1>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole(Roles.Admin))
+        {
+            <p>Hello Admin! You have access to managing locations and users of the site.</p>
+        }
+        else if (User.IsInRole(Roles.User))
+        {
+            <p>Hello User! You have access to your locations and you can add calendars to your locations.</p>
+        }
+        else
+        {
+            <H4>
+                Welcome, User!
+            </H4>
+            <p>
+                Thank you for registering!
+                Your account has been successfully created and is awaiting approval from the Administrator.
+                Please be patient as your account is pending acceptance.
+            </p>
+
+        }
+    }
+    else
+    {
+        <p>Hello Guest! Please log in or register to access the site.</p>
+    }
+
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
