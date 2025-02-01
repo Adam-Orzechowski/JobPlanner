@@ -1,5 +1,6 @@
 ﻿using JobPlanner.Common;
 using JobPlanner.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace JobPlanner.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> Index()
         {
             var users = _context.Users.ToList();
@@ -43,6 +45,7 @@ namespace JobPlanner.Controllers
             return View(userListWithRoles);
         }
 
+        [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -66,18 +69,19 @@ namespace JobPlanner.Controllers
                     UserRole = role.Name,
                     IsSelected = userRoles.Contains(role.Name)
                 }).ToList(),
-                //UserLocations = locations.Select(location => new UserLocations
-                //{
-                //    LocationGuid = location.Id,
-                //    LocationName = location.Name,
-                //    //IsSelected = user.Claims.Any(x => x.ClaimType == ClaimTypes.Location && x.ClaimValue == location.LocationGuid.ToString())
-                //}).ToList()
+                UserLocations = locations.Select(location => new UserLoc
+                {
+                    
+                    Location = location,
+                    IsSelected = _context.UserLocations.Any(ul => ul.UserId == user.Id && ul.LocationId == location.Id)
+                }).ToList()
             };
 
             return View(viewModel);
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> Edit(Guid id, UserWithRolesViewModel roles)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -101,12 +105,31 @@ namespace JobPlanner.Controllers
                 ModelState.AddModelError("", "Nie można dodać roli użytkownikowi");
                 return View("Edit", new { id });
             }
+            //Nie da się wyłączyć userowi admin roli admin
             if (user.Id == "fc2bd771-13fc-48d0-8b82-cde1b74e8fbc")
             {
                 _userManager.AddToRoleAsync(user, Roles.Admin);
             }
 
+            _context.UserLocations.Remove(_context.UserLocations.FirstOrDefault(ul => ul.UserId == user.Id));
+
+            var selecdedLocations = roles.UserLocations.Where(x => x.IsSelected).Select(x => x.Location.Id).ToList();
+            foreach(var ul in selecdedLocations)
+            {
+                _context.UserLocations.Add(new UserLocation
+                {
+                    UserId = user.Id,
+                    LocationId = ul
+                });
+            }
+            await _context.SaveChangesAsync();
+
             return RedirectToAction("Index");
+        }
+        public class UserLoc
+        { 
+            public Location Location { get; set; }
+            public bool IsSelected { get; set; }
         }
 
         public class UserRights
@@ -119,7 +142,7 @@ namespace JobPlanner.Controllers
         {
             public ApplicationUser User { get; set; }
             public List<UserRights> UserRoles { get; set; }
-            //public List<UserLocations> UserLocations { get; set; }
+            public List<UserLoc> UserLocations { get; set; }
         }
     }
 }
